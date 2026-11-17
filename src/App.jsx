@@ -34,6 +34,7 @@ export default function App() {
   const [progress, setProgress] = useState(0);
   const [scrollY, setScrollY] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     const update = () => {
@@ -49,9 +50,12 @@ export default function App() {
     window.addEventListener('scroll', update, { passive: true });
     window.addEventListener('resize', update);
 
+    const timer = window.setTimeout(() => setLoaded(true), 100);
+
     return () => {
       window.removeEventListener('scroll', update);
       window.removeEventListener('resize', update);
+      window.clearTimeout(timer);
     };
   }, []);
 
@@ -62,8 +66,12 @@ export default function App() {
     });
   };
 
+  const heroShift = Math.min(scrollY * 0.18, 180);
+  const heroScale = 1 + Math.min(scrollY / 5000, 0.12);
+  const heroFade = Math.max(0, 1 - scrollY / 850);
+
   return (
-    <main className="svoi-site">
+    <main className={`svoi-site ${loaded ? 'is-loaded' : ''}`}>
       <div
         className="progress"
         style={{ transform: `scaleX(${progress})` }}
@@ -92,7 +100,7 @@ export default function App() {
           <button
             className="menu-button"
             onClick={() => setMenuOpen(!menuOpen)}
-            aria-label="Открыть меню"
+            aria-label={menuOpen ? 'Закрыть меню' : 'Открыть меню'}
           >
             {menuOpen ? <X /> : <Menu />}
           </button>
@@ -110,20 +118,27 @@ export default function App() {
 
       <section className="hero" id="top">
         <div
-          className="hero-image"
+          className="hero-scene"
           style={{
-            transform: `scale(${1 + Math.min(scrollY / 4000, 0.12)}) translateY(${scrollY * 0.12}px)`
+            transform: `translate3d(0, ${heroShift}px, 0) scale(${heroScale})`
           }}
-        />
+        >
+          <div className="hero-image" />
+          <div className="hero-depth" />
+          <div className="hero-light" />
+        </div>
 
         <div className="hero-shade" />
 
-        <div className="hero-content">
-          <p className="eyebrow">
+        <div
+          className="hero-content"
+          style={{ opacity: heroFade }}
+        >
+          <p className="eyebrow hero-eyebrow">
             MOSCOW / EVERYWHERE — EST. SVOI
           </p>
 
-          <h1>
+          <h1 className="hero-title">
             НЕ ЖДИ.<br />
             <em>ДЕЙСТВУЙ.</em>
           </h1>
@@ -141,6 +156,12 @@ export default function App() {
           </button>
         </div>
 
+        <div className="hero-side-label">
+          <span>STREET</span>
+          <i />
+          <span>ACTION</span>
+        </div>
+
         <div className="hero-bottom">
           <div className="scroll-indicator">
             <span className="scroll-mouse">
@@ -152,6 +173,10 @@ export default function App() {
           <span className="hero-index">
             01 <i /> 03
           </span>
+        </div>
+
+        <div className="hero-coordinate">
+          55°45' N&nbsp; 37°37' E
         </div>
       </section>
 
@@ -184,6 +209,7 @@ export default function App() {
           </div>
 
           <div className="story-counter">SVOI / 002</div>
+          <div className="story-vertical">MOVE WITH PURPOSE</div>
         </div>
 
         <div className="statement">
