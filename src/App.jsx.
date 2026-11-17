@@ -1,4 +1,4 @@
-
+// SVOI App component
 import React, { useEffect, useState } from 'react';
 import { ArrowDown, ArrowUpRight, Menu, X } from 'lucide-react';
 
