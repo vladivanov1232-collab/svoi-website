@@ -1,0 +1,103 @@
+import React, { useEffect, useState } from 'react';
+import { ArrowDown, ArrowUpRight, Menu, X } from 'lucide-react';
+
+export default function App() {
+  const [progress, setProgress] = useState(0);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const update = () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      setProgress(max > 0 ? Math.min(1, window.scrollY / max) : 0);
+    };
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    return () => {
+      window.removeEventListener('scroll', update);
+      window.removeEventListener('resize', update);
+    };
+  }, []);
+
+  const jump = (id) => {
+    setMenuOpen(false);
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  return (
+    <main>
+      <div className="progress" style={{ transform: `scaleX(${progress})` }} />
+      <header className="header">
+        <a className="logo" href="#top" onClick={() => setMenuOpen(false)}>SVOI<span>®</span></a>
+        <span className="header-note">STREET ACTION COMMUNITY</span>
+        <button className="menu-button" onClick={() => setMenuOpen(!menuOpen)} aria-label="Открыть меню">
+          {menuOpen ? <X /> : <Menu />}
+        </button>
+        {menuOpen && <nav className="menu">
+          <button onClick={() => jump('story')}>ИСТОРИЯ</button>
+          <button onClick={() => jump('collection')}>КОЛЛЕКЦИЯ</button>
+          <button onClick={() => jump('community')}>КОМЬЮНИТИ</button>
+        </nav>}
+      </header>
+
+      <section className="hero" id="top">
+        <div className="hero-image" />
+        <div className="hero-shade" />
+        <div className="hero-content">
+          <p className="eyebrow">MOSCOW / EVERYWHERE — EST. SVOI</p>
+          <h1>НЕ ЖДИ.<br /><em>ДЕЙСТВУЙ.</em></h1>
+          <p className="hero-copy">Одежда для тех, кто выбирает движение.</p>
+          <button className="round-link" onClick={() => jump('story')} aria-label="Прокрутить вниз"><ArrowDown /></button>
+        </div>
+        <div className="hero-index">01 / 04</div>
+        <div className="vertical-label">MOVE WITH YOUR OWN</div>
+      </section>
+
+      <section className="story" id="story">
+        <div className="story-top">
+          <p className="eyebrow">SCROLL TO MOVE — 02 / 04</p>
+          <p className="story-hint">ПРОКРУЧИВАЙ ВНИЗ<br />ИСТОРИЯ НАЧИНАЕТСЯ</p>
+        </div>
+        <div className="runner-stage">
+          <div className="street-lines"><i /><i /><i /></div>
+          <div className="runner-shadow" />
+          <div className="runner" style={{ transform: `translate3d(${progress * 34}vw, ${Math.sin(progress * Math.PI * 5) * 8}px, 0) scale(${1 + progress * .08})` }}>
+            <div className="runner-head" />
+            <div className="runner-body" />
+            <div className="runner-arm arm-one" />
+            <div className="runner-arm arm-two" />
+            <div className="runner-leg leg-one" />
+            <div className="runner-leg leg-two" />
+          </div>
+          <div className="stage-caption">KEEP<br />MOVING<span>®</span></div>
+          <div className="stage-number">SCROLL / ACTION</div>
+        </div>
+        <div className="statement">
+          <p className="eyebrow">NO SPECTATORS</p>
+          <h2>ЭМОЦИИ ДЕЛАЮТ<br />НАС <em>ЖИВЫМИ.</em></h2>
+          <p>Поэтому действуй. Пробуй. Ошибайся. Двигайся дальше.</p>
+        </div>
+      </section>
+
+      <section className="collection" id="collection">
+        <div className="section-heading">
+          <p className="eyebrow">03 / 04 — THE EVERYDAY UNIFORM</p>
+          <h2>ОДЕЖДА<br /><em>В ДВИЖЕНИИ.</em></h2>
+        </div>
+        <div className="product-grid">
+          <article className="product-card product-one"><div className="product-art"><span>SVOI</span></div><p>01 / EVERYDAY TEE</p><h3>ФУТБОЛКА SVOI</h3></article>
+          <article className="product-card product-two"><div className="product-art"><span>ACT.</span></div><p>02 / STREET ESSENTIAL</p><h3>ХУДИ SVOI</h3></article>
+        </div>
+        <button className="text-link" onClick={() => alert('Каталог скоро появится. Сейчас мы создаём первую коллекцию SVOI.')}>СМОТРЕТЬ КОЛЛЕКЦИЮ <ArrowUpRight size={18} /></button>
+      </section>
+
+      <section className="community" id="community">
+        <p className="eyebrow">04 / 04 — FIND YOUR PEOPLE</p>
+        <h2>МЫ НЕ ПРОСТО<br /><em>НОСИМ SVOI.</em></h2>
+        <p>Мы выходим на улицу, встречаемся, тренируемся и создаём свои истории.</p>
+        <a className="community-link" href="https://www.instagram.com/SVOI.action/" target="_blank" rel="noreferrer">SVOI.ACTION <ArrowUpRight /></a>
+      </section>
+      <footer><a className="logo" href="#top">SVOI<span>®</span></a><span>STREET ACTION COMMUNITY</span><span>© 2026 SVOI</span></footer>
+    </main>
+  );
+}
