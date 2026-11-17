@@ -6,7 +6,9 @@ import {
   ArrowRight,
   Menu,
   X,
-  ShoppingBag
+  ShoppingBag,
+  Instagram,
+  Send
 } from 'lucide-react';
 
 const products = [
@@ -276,9 +278,11 @@ export default function App() {
                   alt={product.name}
                   loading="lazy"
                 />
+
                 <span className="product-number">
                   {product.number}
                 </span>
+
                 <span className="product-arrow">
                   <ArrowUpRight />
                 </span>
@@ -309,14 +313,37 @@ export default function App() {
           Это больше, чем одежда.
         </p>
 
-        <a
-          className="community-link"
-          href="https://www.instagram.com/SVOI.action/"
-          target="_blank"
-          rel="noreferrer"
-        >
-          SVOI.ACTION <ArrowUpRight />
-        </a>
+        <div className="social-block">
+          <p className="social-heading">
+            JOIN THE MOVEMENT
+          </p>
+
+          <div className="social-links">
+            <a
+              className="social-link"
+              href="https://www.instagram.com/SVOI.action/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram SVOI"
+            >
+              <Instagram size={21} />
+              <span>INSTAGRAM</span>
+              <ArrowUpRight size={17} />
+            </a>
+
+            <a
+              className="social-link"
+              href="https://t.me/svoiaction"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Telegram SVOI"
+            >
+              <Send size={21} />
+              <span>TELEGRAM</span>
+              <ArrowUpRight size={17} />
+            </a>
+          </div>
+        </div>
 
         <div className="giant-svoi">SVOI</div>
       </section>
@@ -327,6 +354,27 @@ export default function App() {
         </a>
 
         <span>STREET ACTION COMMUNITY</span>
+
+        <div className="footer-socials">
+          <a
+            href="https://www.instagram.com/SVOI.action/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram"
+          >
+            <Instagram size={18} />
+          </a>
+
+          <a
+            href="https://t.me/svoiaction"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Telegram"
+          >
+            <Send size={18} />
+          </a>
+        </div>
+
         <span>© 2026 SVOI</span>
       </footer>
     </main>
