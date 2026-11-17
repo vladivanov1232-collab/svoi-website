@@ -123,7 +123,28 @@ export default function App() {
             transform: `translate3d(0, ${heroShift}px, 0) scale(${heroScale})`
           }}
         >
-          <div className="hero-image" />
+          <div className="hero-image">
+            <video
+              className="hero-video"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                objectPosition: 'center'
+              }}
+            >
+              <source
+                src="/SVOI_runner_cinematic_v2.mp4"
+                type="video/mp4"
+              />
+            </video>
+          </div>
+
           <div className="hero-depth" />
           <div className="hero-light" />
         </div>
