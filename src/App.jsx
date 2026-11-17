@@ -139,8 +139,8 @@ export default function App() {
               }}
             >
               <source
-                src="/SVOI_runner_cinematic_v2.mp4"
-                type="video/mp4"
+                src="/SVOI_runner_cinematic_v2.mov"
+                type="video/quicktime"
               />
             </video>
           </div>
