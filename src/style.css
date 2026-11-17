@@ -1141,3 +1141,31 @@ footer .footer-socials a:hover {
     gap: 22px;
   }
 }
+/* SVOI SOCIAL POSITION FIX */
+
+.community .social-block {
+  width: min(440px, 100%);
+  margin: 45px 0 0;
+  align-self: flex-start;
+}
+
+.community .social-links {
+  width: 100%;
+}
+
+.community .social-link {
+  width: 100%;
+}
+
+footer .footer-socials {
+  margin-left: auto;
+}
+
+footer .footer-socials a {
+  text-decoration: none;
+}
+
+footer .footer-socials svg {
+  width: 20px;
+  height: 20px;
+}
