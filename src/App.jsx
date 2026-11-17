@@ -1,9 +1,38 @@
-// SVOI App component
+
 import React, { useEffect, useState } from 'react';
-import { ArrowDown, ArrowUpRight, Menu, X } from 'lucide-react';
+import {
+  ArrowDown,
+  ArrowUpRight,
+  ArrowRight,
+  Menu,
+  X,
+  ShoppingBag
+} from 'lucide-react';
+
+const products = [
+  {
+    number: '01',
+    category: 'EVERYDAY TEE',
+    name: 'ФУТБОЛКИ',
+    image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=85'
+  },
+  {
+    number: '02',
+    category: 'STREET ESSENTIAL',
+    name: 'ХУДИ',
+    image: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=900&q=85'
+  },
+  {
+    number: '03',
+    category: 'ACTIVE WEAR',
+    name: 'СПОРТИВНАЯ ОДЕЖДА',
+    image: 'https://images.unsplash.com/photo-1552674605-db6ffd4facb5?auto=format&fit=crop&w=900&q=85'
+  }
+];
 
 export default function App() {
   const [progress, setProgress] = useState(0);
+  const [scrollY, setScrollY] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -11,10 +40,12 @@ export default function App() {
       const max =
         document.documentElement.scrollHeight - window.innerHeight;
 
-      setProgress(max > 0 ? Math.min(1, window.scrollY / max) : 0);
+      setProgress(max > 0 ? window.scrollY / max : 0);
+      setScrollY(window.scrollY);
     };
 
     update();
+
     window.addEventListener('scroll', update, { passive: true });
     window.addEventListener('resize', update);
 
@@ -32,7 +63,7 @@ export default function App() {
   };
 
   return (
-    <main>
+    <main className="svoi-site">
       <div
         className="progress"
         style={{ transform: `scaleX(${progress})` }}
@@ -43,21 +74,34 @@ export default function App() {
           SVOI<span>®</span>
         </a>
 
-        <span className="header-note">
-          STREET ACTION COMMUNITY
-        </span>
+        <nav className="desktop-nav">
+          <button onClick={() => jump('collection')}>КАТАЛОГ</button>
+          <button onClick={() => jump('story')}>О БРЕНДЕ</button>
+          <button onClick={() => jump('community')}>КОМЬЮНИТИ</button>
+        </nav>
 
-        <button
-          className="menu-button"
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Открыть меню"
-        >
-          {menuOpen ? <X /> : <Menu />}
-        </button>
+        <div className="header-actions">
+          <button
+            className="bag-button"
+            onClick={() => jump('collection')}
+            aria-label="Перейти к коллекции"
+          >
+            <ShoppingBag />
+          </button>
+
+          <button
+            className="menu-button"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Открыть меню"
+          >
+            {menuOpen ? <X /> : <Menu />}
+          </button>
+        </div>
 
         {menuOpen && (
           <nav className="menu">
-            <button onClick={() => jump('story')}>ИСТОРИЯ</button>
+            <button onClick={() => jump('top')}>ГЛАВНАЯ</button>
+            <button onClick={() => jump('story')}>О БРЕНДЕ</button>
             <button onClick={() => jump('collection')}>КОЛЛЕКЦИЯ</button>
             <button onClick={() => jump('community')}>КОМЬЮНИТИ</button>
           </nav>
@@ -65,7 +109,13 @@ export default function App() {
       </header>
 
       <section className="hero" id="top">
-        <div className="hero-image" />
+        <div
+          className="hero-image"
+          style={{
+            transform: `scale(${1 + Math.min(scrollY / 4000, 0.12)}) translateY(${scrollY * 0.12}px)`
+          }}
+        />
+
         <div className="hero-shade" />
 
         <div className="hero-content">
@@ -83,65 +133,61 @@ export default function App() {
           </p>
 
           <button
-            className="round-link"
-            onClick={() => jump('story')}
-            aria-label="Прокрутить вниз"
+            className="hero-cta"
+            onClick={() => jump('collection')}
           >
-            <ArrowDown />
+            <span>ПЕРЕЙТИ В КАТАЛОГ</span>
+            <ArrowRight />
           </button>
         </div>
 
-        <div className="hero-index">01 / 04</div>
-        <div className="vertical-label">MOVE WITH YOUR OWN</div>
+        <div className="hero-bottom">
+          <div className="scroll-indicator">
+            <span className="scroll-mouse">
+              <i />
+            </span>
+            <span>СКРОЛЛ ВНИЗ</span>
+          </div>
+
+          <span className="hero-index">
+            01 <i /> 03
+          </span>
+        </div>
       </section>
 
       <section className="story" id="story">
-        <div className="story-top">
-          <p className="eyebrow">SCROLL TO MOVE — 02 / 04</p>
-
+        <div className="story-heading">
+          <p className="eyebrow">02 / THE MOVEMENT</p>
           <p className="story-hint">
-            ПРОКРУЧИВАЙ ВНИЗ<br />
-            ИСТОРИЯ НАЧИНАЕТСЯ
+            ПРОСТО ВЫЙДИ.<br />
+            НАЧНИ ДВИГАТЬСЯ.
           </p>
         </div>
 
-        <div className="runner-stage">
-          <div className="street-lines">
-            <i />
-            <i />
-            <i />
-          </div>
-
-          <div className="runner-shadow" />
-
+        <div className="story-visual">
           <div
-            className="runner"
+            className="story-photo"
             style={{
-              transform: `translate3d(
-                ${progress * 34}vw,
-                ${Math.sin(progress * Math.PI * 5) * 8}px,
-                0
-              ) scale(${1 + progress * 0.08})`
+              transform: `translateY(${Math.max(-45, -scrollY * 0.035)}px) scale(1.06)`
             }}
-          >
-            <div className="runner-head" />
-            <div className="runner-body" />
-            <div className="runner-arm arm-one" />
-            <div className="runner-arm arm-two" />
-            <div className="runner-leg leg-one" />
-            <div className="runner-leg leg-two" />
+          />
+
+          <div className="story-overlay" />
+
+          <div className="story-message">
+            <span>NO SPECTATORS</span>
+            <h2>
+              KEEP<br />
+              <em>MOVING.</em>
+            </h2>
+            <p>НЕ СТОЙ НА МЕСТЕ.</p>
           </div>
 
-          <div className="stage-caption">
-            KEEP<br />
-            MOVING<span>®</span>
-          </div>
-
-          <div className="stage-number">SCROLL / ACTION</div>
+          <div className="story-counter">SVOI / 002</div>
         </div>
 
         <div className="statement">
-          <p className="eyebrow">NO SPECTATORS</p>
+          <p className="eyebrow">THIS IS OUR ATTITUDE</p>
 
           <h2>
             ЭМОЦИИ ДЕЛАЮТ<br />
@@ -149,65 +195,71 @@ export default function App() {
           </h2>
 
           <p>
-            Поэтому действуй. Пробуй. Ошибайся.
-            Двигайся дальше.
+            Пробуй. Ошибайся. Побеждай.
+            Не жди подходящего момента.
+            Создавай его сам.
           </p>
         </div>
       </section>
 
       <section className="collection" id="collection">
-        <div className="section-heading">
-          <p className="eyebrow">
-            03 / 04 — THE EVERYDAY UNIFORM
-          </p>
+        <div className="collection-top">
+          <div>
+            <p className="eyebrow">03 / SVOI COLLECTION</p>
+            <h2>
+              ОДЕЖДА<br />
+              <em>В ДВИЖЕНИИ.</em>
+            </h2>
+          </div>
 
-          <h2>
-            ОДЕЖДА<br />
-            <em>В ДВИЖЕНИИ.</em>
-          </h2>
+          <span className="collection-label">
+            STREET ACTION<br />COMMUNITY
+          </span>
         </div>
 
         <div className="product-grid">
-          <article className="product-card product-one">
-            <div className="product-art">
-              <span>SVOI</span>
-            </div>
-            <p>01 / EVERYDAY TEE</p>
-            <h3>ФУТБОЛКА SVOI</h3>
-          </article>
+          {products.map((product) => (
+            <article
+              className="product-card"
+              key={product.number}
+            >
+              <div className="product-art">
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  loading="lazy"
+                />
+                <span className="product-number">
+                  {product.number}
+                </span>
+                <span className="product-arrow">
+                  <ArrowUpRight />
+                </span>
+              </div>
 
-          <article className="product-card product-two">
-            <div className="product-art">
-              <span>ACT.</span>
-            </div>
-            <p>02 / STREET ESSENTIAL</p>
-            <h3>ХУДИ SVOI</h3>
-          </article>
+              <p>{product.category}</p>
+              <h3>{product.name}</h3>
+            </article>
+          ))}
         </div>
 
-        <button
-          className="text-link"
-          onClick={() =>
-            alert('Каталог скоро появится. Сейчас мы создаём первую коллекцию SVOI.')
-          }
-        >
-          СМОТРЕТЬ КОЛЛЕКЦИЮ <ArrowUpRight size={18} />
-        </button>
+        <p className="catalog-note">
+          ПЕРВАЯ КОЛЛЕКЦИЯ SVOI — СКОРО
+        </p>
       </section>
 
       <section className="community" id="community">
-        <p className="eyebrow">
-          04 / 04 — FIND YOUR PEOPLE
-        </p>
+        <p className="eyebrow">FIND YOUR PEOPLE</p>
 
         <h2>
           МЫ НЕ ПРОСТО<br />
           <em>НОСИМ SVOI.</em>
         </h2>
 
-        <p>
+        <p className="community-copy">
           Мы выходим на улицу, встречаемся,
           тренируемся и создаём свои истории.
+          Это больше, чем одежда.
         </p>
 
         <a
@@ -218,6 +270,8 @@ export default function App() {
         >
           SVOI.ACTION <ArrowUpRight />
         </a>
+
+        <div className="giant-svoi">SVOI</div>
       </section>
 
       <footer>
