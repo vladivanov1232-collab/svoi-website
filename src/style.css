@@ -18,11 +18,23 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 75px;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 body {
   margin: 0;
+  width: 100%;
+  min-width: 320px;
+  overflow-x: hidden;
   background: var(--black);
+}
+
+#root,
+.svoi-site {
+  width: 100%;
+  min-height: 100%;
+  overflow-x: clip;
 }
 
 button, a {
@@ -180,6 +192,7 @@ a {
   position: relative;
   z-index: 2;
   max-width: 850px;
+  width: 100%;
   margin-top: 60px;
 }
 
@@ -449,9 +462,10 @@ a {
 
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 17px;
   margin: 65px 0 35px;
+  width: 100%;
 }
 
 .product-card {
@@ -459,6 +473,7 @@ a {
 }
 
 .product-art {
+  width: 100%;
   height: clamp(250px, 38vw, 490px);
   position: relative;
   overflow: hidden;
@@ -466,15 +481,8 @@ a {
   transform: skewY(-2deg);
 }
 
-.product-art::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(0deg, #0009, transparent 50%);
-  pointer-events: none;
-}
-
 .product-art img {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -485,6 +493,14 @@ a {
 .product-card:hover .product-art img {
   transform: scale(1.07);
   filter: grayscale(.4) brightness(.9);
+}
+
+.product-art::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, #0009, transparent 50%);
+  pointer-events: none;
 }
 
 .product-number {
@@ -548,8 +564,7 @@ a {
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  background:
-    linear-gradient(120deg, #111, #1c1c1c 60%, #080808);
+  background: linear-gradient(120deg, #111, #1c1c1c 60%, #080808);
 }
 
 .community h2 {
