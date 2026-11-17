@@ -1,0 +1,31 @@
+name: SVOI File Diagnostics
+
+on:
+  workflow_dispatch:
+
+jobs:
+  check-files:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Show repository structure
+        run: |
+          echo "===== ROOT ====="
+          ls -la
+          echo "===== SRC ====="
+          ls -la src
+          echo "===== FILES ====="
+          find . -maxdepth 3 -type f | sort
+
+      - name: Check required files
+        run: |
+          for file in src/App.jsx src/main.jsx src/style.css package.json index.html; do
+            if [ -f "$file" ]; then
+              echo "FOUND: $file"
+            else
+              echo "MISSING: $file"
+            fi
+          done
