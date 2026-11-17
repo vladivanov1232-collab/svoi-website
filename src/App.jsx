@@ -7,7 +7,7 @@ import {
   Menu,
   X,
   ShoppingBag,
-  Instagram,
+  Camera,
   Send
 } from 'lucide-react';
 
@@ -326,7 +326,7 @@ export default function App() {
               rel="noopener noreferrer"
               aria-label="Instagram SVOI"
             >
-              <Instagram size={21} />
+              <Camera size={21} />
               <span>INSTAGRAM</span>
               <ArrowUpRight size={17} />
             </a>
@@ -362,7 +362,7 @@ export default function App() {
             rel="noopener noreferrer"
             aria-label="Instagram"
           >
-            <Instagram size={18} />
+            <Camera size={18} />
           </a>
 
           <a
