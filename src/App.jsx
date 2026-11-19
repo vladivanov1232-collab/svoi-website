@@ -278,3 +278,52 @@ export default function App() {
     </main>
   );
 }
+
+
+/* SVOI — image alignment fix */
+
+/* Общая фотография кампании */
+.campaign-image {
+  width: 100%;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  background: #080808;
+}
+
+.campaign-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+/* Одинаковые размеры фотографий футболок */
+.product-art,
+.product-back {
+  width: 100%;
+  height: clamp(350px, 55vw, 650px);
+  overflow: hidden;
+  background: #080808;
+  transform: none;
+}
+
+.product-art img,
+.product-back img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+@media (max-width: 600px) {
+  .product-art,
+  .product-back {
+    height: 420px;
+  }
+
+  .campaign-image {
+    aspect-ratio: 4 / 3;
+  }
+}
