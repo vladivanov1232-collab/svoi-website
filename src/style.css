@@ -1165,3 +1165,50 @@ footer .footer-socials svg {
     gap: 22px;
   }
 }
+/* SVOI — FINAL IMAGE FIX */
+
+/* Фотографии товаров */
+.product-art {
+  height: clamp(350px, 55vw, 620px);
+  transform: none;
+  background: #111;
+}
+
+.product-art img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  filter: none;
+}
+
+/* Убираем эффект увеличения */
+.product-card:hover .product-art img {
+  transform: none;
+  filter: none;
+}
+
+/* Фото кампании */
+.campaign-image {
+  width: 100%;
+  overflow: hidden;
+  background: #080808;
+}
+
+.campaign-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+}
+
+@media (max-width: 650px) {
+  .product-art {
+    height: 420px;
+  }
+
+  .product-card:last-child .product-art {
+    height: 420px;
+  }
+}
