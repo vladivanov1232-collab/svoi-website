@@ -53,6 +53,8 @@ a {
   color: inherit;
 }
 
+/* HEADER */
+
 .progress {
   position: fixed;
   z-index: 100;
@@ -160,7 +162,7 @@ a {
   letter-spacing: 1px;
 }
 
-/* CINEMATIC HERO */
+/* HERO */
 
 .hero {
   min-height: 100svh;
@@ -579,34 +581,46 @@ a {
   min-width: 0;
 }
 
-.product-art {
-  width: 100%;
-  height: clamp(250px, 38vw, 490px);
+/* PRODUCT PHOTOS */
+
+.product-art,
+.product-back {
   position: relative;
+  width: 100%;
+  height: clamp(350px, 45vw, 560px);
   overflow: hidden;
-  background: #292929;
-  transform: skewY(-2deg);
+  background: #181818;
+  transform: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.product-art img {
+.product-art img,
+.product-back img {
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  filter: grayscale(1) brightness(.75);
-  transition: transform .7s, filter .7s;
+  object-fit: contain;
+  object-position: center center;
+  padding: 0;
+  filter: none;
+  transform: none;
+  transition: none;
 }
 
-.product-card:hover .product-art img {
-  transform: scale(1.07);
-  filter: grayscale(.4) brightness(.9);
+.product-card:hover .product-art img,
+.product-card:hover .product-back img {
+  transform: none;
+  filter: none;
 }
 
-.product-art::after {
+.product-art::after,
+.product-back::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(0deg, #0009, transparent 50%);
+  background: linear-gradient(0deg, #0005, transparent 45%);
   pointer-events: none;
 }
 
@@ -660,6 +674,23 @@ a {
   margin-top: 25px;
   border-bottom: 1px solid var(--gold);
   padding-bottom: 14px;
+}
+
+/* CAMPAIGN IMAGE */
+
+.campaign-image {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: #080808;
+}
+
+.campaign-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
 }
 
 /* COMMUNITY */
@@ -762,9 +793,7 @@ a {
   color: #fff;
   text-decoration: none;
   border-bottom: 1px solid rgba(255,255,255,0.2);
-  transition: color 0.3s ease,
-              padding 0.3s ease,
-              border-color 0.3s ease;
+  transition: color 0.3s ease, padding 0.3s ease, border-color 0.3s ease;
 }
 
 .social-link span {
@@ -787,6 +816,17 @@ a {
 
 .social-link:hover svg:last-child {
   transform: translate(4px, -4px);
+}
+
+.community .social-block {
+  width: min(440px, 100%);
+  margin: 45px 0 0;
+  align-self: flex-start;
+}
+
+.community .social-links,
+.community .social-link {
+  width: 100%;
 }
 
 /* FOOTER */
@@ -824,8 +864,7 @@ footer .footer-socials a {
   justify-content: center;
   color: #fff;
   text-decoration: none;
-  transition: color 0.3s ease,
-              transform 0.3s ease;
+  transition: color 0.3s ease, transform 0.3s ease;
 }
 
 footer .footer-socials a:hover {
@@ -883,13 +922,15 @@ footer .footer-socials svg {
   }
 }
 
-/* TABLET AND MOBILE */
+/* TABLET */
 
 @media (min-width: 1000px) {
   .hero {
     min-height: 850px;
   }
 }
+
+/* MOBILE */
 
 @media (max-width: 650px) {
   .header {
@@ -1052,12 +1093,11 @@ footer .footer-socials svg {
     width: 100%;
   }
 
-  .product-art {
-    height: 250px;
-  }
-
-  .product-card:last-child .product-art {
-    height: 300px;
+  .product-art,
+  .product-back,
+  .product-card:last-child .product-art,
+  .product-card:last-child .product-back {
+    height: 420px;
   }
 
   .product-card > p {
@@ -1092,14 +1132,27 @@ footer .footer-socials svg {
     bottom: -35px;
   }
 
+  .social-block {
+    margin-top: 38px;
+  }
+
+  .social-link {
+    min-height: 58px;
+  }
+
   footer {
     padding: 28px 6vw;
     flex-wrap: wrap;
+    gap: 18px;
   }
 
   footer span {
     font-size: 7px;
     letter-spacing: 1px;
+  }
+
+  footer .footer-socials {
+    gap: 22px;
   }
 }
 
@@ -1108,14 +1161,17 @@ footer .footer-socials svg {
     font-size: 55px;
   }
 
-  .product-art {
-    height: 210px;
+  .product-art,
+  .product-back {
+    height: 360px;
   }
 
   .story-message h2 {
     font-size: 56px;
   }
 }
+
+/* REDUCED MOTION */
 
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -1127,88 +1183,5 @@ footer .footer-socials svg {
   *::after {
     animation-duration: .01ms !important;
     transition-duration: .01ms !important;
-  }
-}
-
-/* SOCIAL POSITION FIX */
-
-.community .social-block {
-  width: min(440px, 100%);
-  margin: 45px 0 0;
-  align-self: flex-start;
-}
-
-.community .social-links {
-  width: 100%;
-}
-
-.community .social-link {
-  width: 100%;
-}
-
-/* MOBILE SOCIAL */
-
-@media (max-width: 600px) {
-  .social-block {
-    margin-top: 38px;
-  }
-
-  .social-link {
-    min-height: 58px;
-  }
-
-  footer {
-    gap: 18px;
-  }
-
-  footer .footer-socials {
-    gap: 22px;
-  }
-}
-/* SVOI — FINAL IMAGE FIX */
-
-/* Фотографии товаров */
-.product-art {
-  height: clamp(350px, 55vw, 620px);
-  transform: none;
-  background: #111;
-}
-
-.product-art img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: center;
-  filter: none;
-}
-
-/* Убираем эффект увеличения */
-.product-card:hover .product-art img {
-  transform: none;
-  filter: none;
-}
-
-/* Фото кампании */
-.campaign-image {
-  width: 100%;
-  overflow: hidden;
-  background: #080808;
-}
-
-.campaign-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: center;
-  display: block;
-}
-
-@media (max-width: 650px) {
-  .product-art {
-    height: 420px;
-  }
-
-  .product-card:last-child .product-art {
-    height: 420px;
   }
 }
