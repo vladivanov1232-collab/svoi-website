@@ -167,7 +167,8 @@ export default function App() {
     setTouchStart(null);
   };
 
-  const heroShift = Math.min(scrollY * 0.18, 180);
+  // Уменьшено смещение видео при прокрутке
+  const heroShift = Math.min(scrollY * 0.05, 45);
   const heroScale = 1 + Math.min(scrollY / 5000, 0.12);
   const heroFade = Math.max(0, 1 - scrollY / 850);
 
@@ -234,7 +235,7 @@ export default function App() {
               muted
               loop
               playsInline
-              preload="metadata"
+              preload="auto"
             >
               <source
                 src="/SVOI_runner_cinematic_v2.mp4.MP4"
@@ -421,7 +422,6 @@ export default function App() {
                 </div>
 
                 <p>{product.category}</p>
-
                 <h3>{product.name}</h3>
 
                 <div className="product-description">
@@ -528,7 +528,6 @@ export default function App() {
 
             <div className="product-detail-info">
               <p>{selectedProduct.category}</p>
-
               <h2>{selectedProduct.name}</h2>
 
               <div className="product-detail-price">
