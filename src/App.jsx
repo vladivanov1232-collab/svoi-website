@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import {
   ArrowUpRight,
@@ -111,6 +112,7 @@ export default function App() {
 
   const jump = (id) => {
     setMenuOpen(false);
+
     document.getElementById(id)?.scrollIntoView({
       behavior: 'smooth'
     });
@@ -166,12 +168,11 @@ export default function App() {
     setTouchStart(null);
   };
 
-  const heroShift = Math.min(scrollY * 0.05, 45);
-  const heroScale = 1 + Math.min(scrollY / 5000, 0.12);
   const heroFade = Math.max(0, 1 - scrollY / 850);
 
   return (
     <main className={`svoi-site ${loaded ? 'is-loaded' : ''}`}>
+
       <div
         className="progress"
         style={{ transform: `scaleX(${progress})` }}
@@ -219,12 +220,10 @@ export default function App() {
       {/* HERO */}
 
       <section className="hero" id="top">
-        <div
-          className="hero-scene"
-          style={{
-            transform: `translate3d(0, ${heroShift}px, 0) scale(${heroScale})`
-          }}
-        >
+
+        {/* Видео без параллакса и дополнительного фонового изображения */}
+
+        <div className="hero-scene">
           <div className="hero-image">
             <video
               className="hero-video"
@@ -233,8 +232,6 @@ export default function App() {
               loop
               playsInline
               preload="auto"
-              disablePictureInPicture
-              aria-hidden="true"
             >
               <source
                 src="/SVOI_runner_cinematic_v2.mp4.MP4"
