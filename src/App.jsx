@@ -3,6 +3,9 @@ import React, { useEffect, useState } from 'react';
 import {
   ArrowUpRight,
   ArrowRight,
+  ArrowLeft,
+  ChevronLeft,
+  ChevronRight,
   Menu,
   X,
   ShoppingBag,
@@ -19,7 +22,11 @@ const products = [
     price: '1 990 ₽',
     front: '/images/white-tee-front.jpg',
     back: '/images/white-tee-back.jpg',
-    description: 'Белая футболка свободного кроя'
+    description: 'Белая футболка свободного кроя',
+    photos: [
+      '/images/white-tee-front.jpg',
+      '/images/white-tee-back.jpg'
+    ]
   },
   {
     number: '02',
@@ -29,7 +36,11 @@ const products = [
     price: '1 990 ₽',
     front: '/images/black-tee-front.jpg',
     back: '/images/black-tee-back.jpg',
-    description: 'Чёрная футболка свободного кроя'
+    description: 'Чёрная футболка свободного кроя',
+    photos: [
+      '/images/black-tee-front.jpg',
+      '/images/black-tee-back.jpg'
+    ]
   }
 ];
 
@@ -38,6 +49,10 @@ export default function App() {
   const [scrollY, setScrollY] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
   const [loaded, setLoaded] = useState(false);
+
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [activePhoto, setActivePhoto] = useState(0);
+  const [touchStart, setTouchStart] = useState(null);
 
   useEffect(() => {
     const update = () => {
@@ -62,11 +77,75 @@ export default function App() {
     };
   }, []);
 
+  useEffect(() => {
+    if (!selectedProduct) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') closeProduct();
+      if (event.key === 'ArrowRight') nextPhoto();
+      if (event.key === 'ArrowLeft') previousPhoto();
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [selectedProduct, activePhoto]);
+
   const jump = (id) => {
     setMenuOpen(false);
     document.getElementById(id)?.scrollIntoView({
       behavior: 'smooth'
     });
+  };
+
+  const openProduct = (product) => {
+    setSelectedProduct(product);
+    setActivePhoto(0);
+  };
+
+  const closeProduct = () => {
+    setSelectedProduct(null);
+    setActivePhoto(0);
+  };
+
+  const nextPhoto = () => {
+    if (!selectedProduct) return;
+
+    setActivePhoto((current) =>
+      (current + 1) % selectedProduct.photos.length
+    );
+  };
+
+  const previousPhoto = () => {
+    if (!selectedProduct) return;
+
+    setActivePhoto((current) =>
+      (current - 1 + selectedProduct.photos.length) %
+      selectedProduct.photos.length
+    );
+  };
+
+  const handleTouchStart = (event) => {
+    setTouchStart(event.touches[0].clientX);
+  };
+
+  const handleTouchEnd = (event) => {
+    if (touchStart === null) return;
+
+    const difference = touchStart - event.changedTouches[0].clientX;
+
+    if (Math.abs(difference) > 45) {
+      if (difference > 0) nextPhoto();
+      else previousPhoto();
+    }
+
+    setTouchStart(null);
   };
 
   const heroShift = Math.min(scrollY * 0.18, 180);
@@ -282,31 +361,38 @@ export default function App() {
 
         <div className="product-grid">
           {products.map((product) => (
-            <article className="product-card" key={product.number}>
+            <article
+              className="product-card product-card-clickable"
+              key={product.number}
+              onClick={() => openProduct(product)}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                  event.preventDefault();
+                  openProduct(product);
+                }
+              }}
+              role="button"
+              tabIndex={0}
+              aria-label={`Открыть ${product.name}`}
+            >
               <div className="product-art">
                 <img
                   src={product.front}
                   alt={`${product.name} front`}
                   loading="lazy"
                 />
+
                 <span className="product-number">
                   {product.number}
                 </span>
+
                 <span className="product-arrow">
                   <ArrowUpRight />
                 </span>
               </div>
 
-              <div className="product-back">
-                <img
-                  src={product.back}
-                  alt={`${product.name} back`}
-                  loading="lazy"
-                />
-                <span>BACK VIEW</span>
-              </div>
-
               <p>{product.category}</p>
+
               <h3>{product.name}</h3>
 
               <div className="product-description">
@@ -323,6 +409,10 @@ export default function App() {
                 <strong>{product.price}</strong>
                 <span>{product.color}</span>
               </div>
+
+              <div className="product-view-hint">
+                СМОТРЕТЬ ТОВАР <ArrowUpRight size={15} />
+              </div>
             </article>
           ))}
         </div>
@@ -331,6 +421,100 @@ export default function App() {
           ПЕРВАЯ КОЛЛЕКЦИЯ SVOI
         </p>
       </section>
+
+      {selectedProduct && (
+        <div
+          className="product-detail-overlay"
+          onClick={closeProduct}
+        >
+          <div
+            className="product-detail"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <button
+              className="product-detail-close"
+              onClick={closeProduct}
+              aria-label="Закрыть товар"
+            >
+              <X />
+            </button>
+
+            <div className="product-detail-header">
+              <span>SVOI / PRODUCT</span>
+              <span>{selectedProduct.number} — 02</span>
+            </div>
+
+            <div
+              className="product-gallery"
+              onTouchStart={handleTouchStart}
+              onTouchEnd={handleTouchEnd}
+            >
+              <img
+                key={selectedProduct.photos[activePhoto]}
+                src={selectedProduct.photos[activePhoto]}
+                alt={`${selectedProduct.name}, фото ${activePhoto + 1}`}
+              />
+
+              <button
+                className="gallery-arrow gallery-prev"
+                onClick={previousPhoto}
+                aria-label="Предыдущее фото"
+              >
+                <ChevronLeft />
+              </button>
+
+              <button
+                className="gallery-arrow gallery-next"
+                onClick={nextPhoto}
+                aria-label="Следующее фото"
+              >
+                <ChevronRight />
+              </button>
+
+              <span className="gallery-counter">
+                0{activePhoto + 1} / 0{selectedProduct.photos.length}
+              </span>
+            </div>
+
+            <div className="gallery-dots">
+              {selectedProduct.photos.map((photo, index) => (
+                <button
+                  key={photo}
+                  className={activePhoto === index ? 'active' : ''}
+                  onClick={() => setActivePhoto(index)}
+                  aria-label={`Фото ${index + 1}`}
+                />
+              ))}
+            </div>
+
+            <div className="product-detail-info">
+              <p>{selectedProduct.category}</p>
+
+              <h2>{selectedProduct.name}</h2>
+
+              <div className="product-detail-price">
+                {selectedProduct.price}
+              </div>
+
+              <p className="product-detail-description">
+                {selectedProduct.description}
+              </p>
+
+              <div className="product-detail-specs">
+                <span>100% ХЛОПОК</span>
+                <span>230 Г/М²</span>
+                <span>OVERSIZE FIT</span>
+              </div>
+
+              <div className="product-gallery-caption">
+                <ArrowLeft size={15} />
+                ЛИСТАЙ ФОТОГРАФИИ
+                <ArrowRight size={15} />
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       <section className="community" id="community">
         <p className="eyebrow">FIND YOUR PEOPLE</p>
