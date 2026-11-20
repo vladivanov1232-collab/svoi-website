@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import {
   ArrowUpRight,
@@ -167,14 +166,12 @@ export default function App() {
     setTouchStart(null);
   };
 
-  // Уменьшено смещение видео при прокрутке
   const heroShift = Math.min(scrollY * 0.05, 45);
   const heroScale = 1 + Math.min(scrollY / 5000, 0.12);
   const heroFade = Math.max(0, 1 - scrollY / 850);
 
   return (
     <main className={`svoi-site ${loaded ? 'is-loaded' : ''}`}>
-
       <div
         className="progress"
         style={{ transform: `scaleX(${progress})` }}
@@ -236,6 +233,8 @@ export default function App() {
               loop
               playsInline
               preload="auto"
+              disablePictureInPicture
+              aria-hidden="true"
             >
               <source
                 src="/SVOI_runner_cinematic_v2.mp4.MP4"
