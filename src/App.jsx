@@ -84,9 +84,22 @@ export default function App() {
     document.body.style.overflow = 'hidden';
 
     const handleKeyDown = (event) => {
-      if (event.key === 'Escape') closeProduct();
-      if (event.key === 'ArrowRight') nextPhoto();
-      if (event.key === 'ArrowLeft') previousPhoto();
+      if (event.key === 'Escape') {
+        setSelectedProduct(null);
+      }
+
+      if (event.key === 'ArrowRight') {
+        setActivePhoto((current) =>
+          (current + 1) % selectedProduct.photos.length
+        );
+      }
+
+      if (event.key === 'ArrowLeft') {
+        setActivePhoto((current) =>
+          (current - 1 + selectedProduct.photos.length) %
+          selectedProduct.photos.length
+        );
+      }
     };
 
     window.addEventListener('keydown', handleKeyDown);
@@ -95,7 +108,7 @@ export default function App() {
       document.body.style.overflow = previousOverflow;
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [selectedProduct, activePhoto]);
+  }, [selectedProduct]);
 
   const jump = (id) => {
     setMenuOpen(false);
@@ -105,13 +118,15 @@ export default function App() {
   };
 
   const openProduct = (product) => {
-    setSelectedProduct(product);
     setActivePhoto(0);
+    setTouchStart(null);
+    setSelectedProduct(product);
   };
 
   const closeProduct = () => {
     setSelectedProduct(null);
     setActivePhoto(0);
+    setTouchStart(null);
   };
 
   const nextPhoto = () => {
@@ -138,11 +153,15 @@ export default function App() {
   const handleTouchEnd = (event) => {
     if (touchStart === null) return;
 
-    const difference = touchStart - event.changedTouches[0].clientX;
+    const difference =
+      touchStart - event.changedTouches[0].clientX;
 
     if (Math.abs(difference) > 45) {
-      if (difference > 0) nextPhoto();
-      else previousPhoto();
+      if (difference > 0) {
+        nextPhoto();
+      } else {
+        previousPhoto();
+      }
     }
 
     setTouchStart(null);
@@ -154,6 +173,7 @@ export default function App() {
 
   return (
     <main className={`svoi-site ${loaded ? 'is-loaded' : ''}`}>
+
       <div
         className="progress"
         style={{ transform: `scaleX(${progress})` }}
@@ -182,6 +202,7 @@ export default function App() {
           <button
             className="menu-button"
             onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Меню"
           >
             {menuOpen ? <X /> : <Menu />}
           </button>
@@ -196,6 +217,8 @@ export default function App() {
           </nav>
         )}
       </header>
+
+      {/* HERO */}
 
       <section className="hero" id="top">
         <div
@@ -274,9 +297,12 @@ export default function App() {
         </div>
       </section>
 
+      {/* STORY */}
+
       <section className="story" id="story">
         <div className="story-heading">
           <p className="eyebrow">02 / THE MOVEMENT</p>
+
           <p className="story-hint">
             ПРОСТО ВЫЙДИ.<br />
             НАЧНИ ДВИГАТЬСЯ.
@@ -322,9 +348,12 @@ export default function App() {
         </div>
       </section>
 
+      {/* CAMPAIGN */}
+
       <section className="campaign">
         <div className="campaign-heading">
           <p className="eyebrow">SVOI / THE PEOPLE</p>
+
           <h2>
             ОДНИ <em>ЦЕННОСТИ.</em><br />
             ОДНО ДВИЖЕНИЕ.
@@ -337,16 +366,20 @@ export default function App() {
             alt="SVOI streetwear campaign"
             loading="lazy"
           />
+
           <span className="campaign-caption">
             STREET ACTION COMMUNITY — SVOI
           </span>
         </div>
       </section>
 
+      {/* COLLECTION */}
+
       <section className="collection" id="collection">
         <div className="collection-top">
           <div>
             <p className="eyebrow">03 / SVOI COLLECTION</p>
+
             <h2>
               ОДЕЖДА<br />
               <em>В ДВИЖЕНИИ.</em>
@@ -364,55 +397,52 @@ export default function App() {
             <article
               className="product-card product-card-clickable"
               key={product.number}
-              onClick={() => openProduct(product)}
-              onKeyDown={(event) => {
-                if (event.key === 'Enter' || event.key === ' ') {
-                  event.preventDefault();
-                  openProduct(product);
-                }
-              }}
-              role="button"
-              tabIndex={0}
-              aria-label={`Открыть ${product.name}`}
             >
-              <div className="product-art">
-                <img
-                  src={product.front}
-                  alt={`${product.name} front`}
-                  loading="lazy"
-                />
+              <button
+                type="button"
+                className="product-card-trigger"
+                onClick={() => openProduct(product)}
+                aria-label={`Открыть ${product.name}`}
+              >
+                <div className="product-art">
+                  <img
+                    src={product.front}
+                    alt={`${product.name} front`}
+                    loading="lazy"
+                  />
 
-                <span className="product-number">
-                  {product.number}
-                </span>
+                  <span className="product-number">
+                    {product.number}
+                  </span>
 
-                <span className="product-arrow">
-                  <ArrowUpRight />
-                </span>
-              </div>
+                  <span className="product-arrow">
+                    <ArrowUpRight />
+                  </span>
+                </div>
 
-              <p>{product.category}</p>
+                <p>{product.category}</p>
 
-              <h3>{product.name}</h3>
+                <h3>{product.name}</h3>
 
-              <div className="product-description">
-                {product.description}
-              </div>
+                <div className="product-description">
+                  {product.description}
+                </div>
 
-              <div className="product-specs">
-                <span>ХЛОПОК</span>
-                <span>230 Г/М²</span>
-                <span>OVERSIZE</span>
-              </div>
+                <div className="product-specs">
+                  <span>ХЛОПОК</span>
+                  <span>230 Г/М²</span>
+                  <span>OVERSIZE</span>
+                </div>
 
-              <div className="product-buy">
-                <strong>{product.price}</strong>
-                <span>{product.color}</span>
-              </div>
+                <div className="product-buy">
+                  <strong>{product.price}</strong>
+                  <span>{product.color}</span>
+                </div>
 
-              <div className="product-view-hint">
-                СМОТРЕТЬ ТОВАР <ArrowUpRight size={15} />
-              </div>
+                <div className="product-view-hint">
+                  СМОТРЕТЬ ТОВАР <ArrowUpRight size={15} />
+                </div>
+              </button>
             </article>
           ))}
         </div>
@@ -422,6 +452,8 @@ export default function App() {
         </p>
       </section>
 
+      {/* PRODUCT GALLERY */}
+
       {selectedProduct && (
         <div
           className="product-detail-overlay"
@@ -429,9 +461,13 @@ export default function App() {
         >
           <div
             className="product-detail"
+            role="dialog"
+            aria-modal="true"
+            aria-label={selectedProduct.name}
             onClick={(event) => event.stopPropagation()}
           >
             <button
+              type="button"
               className="product-detail-close"
               onClick={closeProduct}
               aria-label="Закрыть товар"
@@ -456,6 +492,7 @@ export default function App() {
               />
 
               <button
+                type="button"
                 className="gallery-arrow gallery-prev"
                 onClick={previousPhoto}
                 aria-label="Предыдущее фото"
@@ -464,6 +501,7 @@ export default function App() {
               </button>
 
               <button
+                type="button"
                 className="gallery-arrow gallery-next"
                 onClick={nextPhoto}
                 aria-label="Следующее фото"
@@ -479,6 +517,7 @@ export default function App() {
             <div className="gallery-dots">
               {selectedProduct.photos.map((photo, index) => (
                 <button
+                  type="button"
                   key={photo}
                   className={activePhoto === index ? 'active' : ''}
                   onClick={() => setActivePhoto(index)}
@@ -515,6 +554,8 @@ export default function App() {
           </div>
         </div>
       )}
+
+      {/* COMMUNITY */}
 
       <section className="community" id="community">
         <p className="eyebrow">FIND YOUR PEOPLE</p>
@@ -560,6 +601,8 @@ export default function App() {
 
         <div className="giant-svoi">SVOI</div>
       </section>
+
+      {/* FOOTER */}
 
       <footer>
         <a className="logo" href="#top">
