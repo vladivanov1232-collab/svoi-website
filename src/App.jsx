@@ -237,8 +237,8 @@ export default function App() {
               preload="metadata"
             >
               <source
-                src="/SVOI_runner_cinematic_v2.mov"
-                type="video/quicktime"
+                src="/SVOI_runner_cinematic_v2.mp4.MP4"
+                type="video/mp4"
               />
             </video>
           </div>
