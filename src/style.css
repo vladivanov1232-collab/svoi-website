@@ -1431,3 +1431,21 @@ footer .footer-socials svg {
   font-weight: 800;
   letter-spacing: 1.5px;
 }
+/* SVOI — HERO VIDEO FIX */
+
+.hero-image {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background-color: #080808;
+}
+
+.hero-video {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+}
