@@ -1407,3 +1407,35 @@ footer .footer-socials svg {
     transition-duration: .01ms !important;
   }
 }
+/* SVOI — UNIFIED BLACK BACKGROUND */
+
+:root {
+  --black: #080808;
+  --dark-gray: #080808;
+}
+
+html,
+body,
+#root,
+.svoi-site {
+  background: #080808;
+}
+
+.story,
+.campaign,
+.collection,
+.community,
+footer {
+  background: #080808 !important;
+}
+
+.community {
+  background: #080808 !important;
+}
+
+.product-art,
+.product-back,
+.product-card-trigger,
+.campaign-image {
+  background-color: #080808 !important;
+}
