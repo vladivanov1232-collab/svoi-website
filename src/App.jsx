@@ -221,7 +221,7 @@ export default function App() {
 
       <section className="hero" id="top">
 
-        {/* Видео без параллакса и дополнительного фонового изображения */}
+        {/* Видео без дополнительного размытого слоя */}
 
         <div className="hero-scene">
           <div className="hero-image">
@@ -241,7 +241,6 @@ export default function App() {
           </div>
 
           <div className="hero-depth" />
-          <div className="hero-light" />
         </div>
 
         <div className="hero-shade" />
