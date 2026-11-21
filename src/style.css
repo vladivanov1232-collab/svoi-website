@@ -1337,13 +1337,18 @@ footer .footer-socials svg {
 
   .community-copy { font-size: 14px; }
 
+  /* Увеличенная надпись SVOI на телефонах */
+
   .giant-svoi {
-    font-size: clamp(110px, 27vw, 190px);
+    font-size: clamp(135px, 37vw, 170px);
     bottom: -25px;
     left: 0;
     right: 0;
     width: 100%;
+    padding: 0 6vw;
+    box-sizing: border-box;
     text-align: center;
+    white-space: nowrap;
     letter-spacing: -.12em;
   }
 
