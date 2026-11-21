@@ -36,6 +36,8 @@ body {
   overflow-x: clip;
 }
 
+/* GENERAL */
+
 button, a { font: inherit; }
 button { color: inherit; cursor: pointer; }
 a { color: inherit; }
@@ -139,7 +141,7 @@ a { color: inherit; }
   letter-spacing: 1px;
 }
 
-/* HERO — CLEAN VIDEO */
+/* HERO — VIDEO */
 
 .hero {
   min-height: 100svh;
@@ -178,8 +180,7 @@ a { color: inherit; }
 
 .hero-video {
   position: absolute;
-  top: 0;
-  left: 0;
+  inset: 0;
   display: block;
   width: 100%;
   height: 100%;
@@ -188,7 +189,7 @@ a { color: inherit; }
   object-fit: cover;
   object-position: center center;
   border: 0;
-  transform: none;
+  transform: scale(1.18);
   transform-origin: center center;
 }
 
@@ -1007,11 +1008,15 @@ a { color: inherit; }
 
 .giant-svoi {
   position: absolute;
-  bottom: -100px;
-  right: -20px;
+  bottom: -55px;
+  left: 0;
+  right: 0;
+  width: 100%;
+  text-align: center;
+  white-space: nowrap;
   color: transparent;
   -webkit-text-stroke: 1px #ffffff24;
-  font-size: clamp(180px, 30vw, 440px);
+  font-size: clamp(120px, 28vw, 440px);
   font-weight: 800;
   letter-spacing: -.12em;
   line-height: 1;
@@ -1193,7 +1198,8 @@ footer .footer-socials svg {
 
   .hero-video {
     object-position: center center;
-    transform: none;
+    transform: scale(1.5);
+    transform-origin: center center;
   }
 
   .hero-shade {
@@ -1332,8 +1338,13 @@ footer .footer-socials svg {
   .community-copy { font-size: 14px; }
 
   .giant-svoi {
-    font-size: 190px;
-    bottom: -35px;
+    font-size: clamp(110px, 27vw, 190px);
+    bottom: -25px;
+    left: 0;
+    right: 0;
+    width: 100%;
+    text-align: center;
+    letter-spacing: -.12em;
   }
 
   .social-block { margin-top: 38px; }
