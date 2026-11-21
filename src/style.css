@@ -139,7 +139,7 @@ a { color: inherit; }
   letter-spacing: 1px;
 }
 
-/* HERO — VIDEO LAYER FIX */
+/* HERO — CLEAN VIDEO */
 
 .hero {
   min-height: 100svh;
@@ -153,8 +153,6 @@ a { color: inherit; }
   background: #080808;
   isolation: isolate;
 }
-
-/* Видео теперь занимает всю секцию без отрицательных отступов */
 
 .hero-scene {
   position: absolute;
@@ -178,9 +176,6 @@ a { color: inherit; }
   animation: none;
 }
 
-/* Убираем отдельный фон-картинку.
-   Видео само заполняет весь первый экран. */
-
 .hero-video {
   position: absolute;
   top: 0;
@@ -193,7 +188,7 @@ a { color: inherit; }
   object-fit: cover;
   object-position: center center;
   border: 0;
-  transform: scale(1.12);
+  transform: none;
   transform-origin: center center;
 }
 
@@ -208,20 +203,10 @@ a { color: inherit; }
   animation: depthReveal 2s ease-out both;
 }
 
+/* Убираем размытый световой слой */
+
 .hero-light {
-  position: absolute;
-  z-index: 1;
-  width: 55vw;
-  height: 55vw;
-  max-width: 700px;
-  max-height: 700px;
-  right: -10%;
-  top: 5%;
-  border-radius: 50%;
-  background: radial-gradient(circle, #C6A66B10, transparent 70%);
-  filter: blur(35px);
-  animation: lightPulse 7s ease-in-out infinite alternate;
-  pointer-events: none;
+  display: none !important;
 }
 
 .hero-shade {
@@ -1208,7 +1193,7 @@ footer .footer-socials svg {
 
   .hero-video {
     object-position: center center;
-    transform: scale(1.16);
+    transform: none;
   }
 
   .hero-shade {
