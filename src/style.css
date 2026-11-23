@@ -1198,7 +1198,7 @@ footer .footer-socials svg {
 
   .hero-video {
     object-position: center center;
-    transform: scale(1.5);
+    transform: scale(1.8);
     transform-origin: center center;
   }
 
@@ -1407,6 +1407,7 @@ footer .footer-socials svg {
     transition-duration: .01ms !important;
   }
 }
+
 /* SVOI — UNIFIED BLACK BACKGROUND */
 
 :root {
