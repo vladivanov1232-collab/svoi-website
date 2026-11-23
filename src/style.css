@@ -1196,9 +1196,11 @@ footer .footer-socials svg {
     height: 100%;
   }
 
+  /* Поднимаем видео, чтобы скрыть верхнюю размытую полосу */
+
   .hero-video {
     object-position: center center;
-    transform: scale(1.8);
+    transform: translateY(-110px) scale(1.8);
     transform-origin: center center;
   }
 
