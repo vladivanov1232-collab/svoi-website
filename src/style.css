@@ -1191,7 +1191,7 @@ footer .footer-socials svg {
     align-items: flex-end;
   }
 
-  /* Видео занимает весь Hero без верхнего отступа */
+  /* Видео начинается сразу под шапкой */
 
   .hero-scene {
     position: absolute;
@@ -1202,7 +1202,7 @@ footer .footer-socials svg {
 
   .hero-video {
     object-position: center center;
-    transform: scale(1.45);
+    transform: translateY(-115px) scale(1.45);
     transform-origin: center center;
   }
 
