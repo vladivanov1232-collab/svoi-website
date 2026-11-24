@@ -10,7 +10,7 @@
   --gold: #C6A66B;
   --black: #080808;
   --white: #F4F2ED;
-  --dark-gray: #080808;
+  --dark-gray: #252525;
 }
 
 * { box-sizing: border-box; }
@@ -517,7 +517,7 @@ a { color: inherit; }
 /* CAMPAIGN */
 
 .campaign {
-  background: #080808;
+  background: #111;
   padding: 100px 5.5vw;
   overflow: hidden;
 }
@@ -565,7 +565,7 @@ a { color: inherit; }
 /* COLLECTION */
 
 .collection {
-  background: #080808;
+  background: #111;
   color: #f4f2ed;
   padding: 105px 5.5vw 120px;
   overflow: hidden;
@@ -618,7 +618,7 @@ a { color: inherit; }
   width: 100%;
   height: clamp(350px, 45vw, 560px);
   overflow: hidden;
-  background: #080808;
+  background: #181818;
   transform: none;
   display: flex;
   align-items: center;
@@ -716,7 +716,7 @@ a { color: inherit; }
   margin: 0 !important;
   border: 0 !important;
   border-radius: 0 !important;
-  background: #080808 !important;
+  background: #111 !important;
   color: #f4f2ed !important;
   text-align: left !important;
   font-family: inherit !important;
@@ -728,7 +728,7 @@ a { color: inherit; }
 .product-card-trigger:focus,
 .product-card-trigger:active {
   outline: none !important;
-  background: #080808 !important;
+  background: #111 !important;
 }
 
 .product-description {
@@ -961,7 +961,7 @@ a { color: inherit; }
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  background: #080808;
+  background: linear-gradient(120deg, #111, #252525 60%, #080808);
 }
 
 .community h2 {
@@ -1096,7 +1096,7 @@ footer {
   align-items: center;
   justify-content: space-between;
   gap: 15px;
-  background: #080808;
+  background: #050505;
 }
 
 footer .logo { font-size: 25px; }
@@ -1175,6 +1175,8 @@ footer .footer-socials svg {
     height: 65px;
     padding: 0 5vw;
     border-bottom: 1px solid #ffffff24;
+    background: #080808 !important;
+    z-index: 30;
   }
 
   .logo { font-size: 29px; }
@@ -1206,11 +1208,10 @@ footer .footer-socials svg {
     overflow: hidden;
   }
 
-  /* VIDEO — FULL HERO, WITHOUT EMPTY SPACE */
+  /* VIDEO — FULL HERO, NO TOP OFFSET */
 
   .hero-video {
     position: absolute !important;
-    inset: 0 !important;
     top: 0 !important;
     left: 0 !important;
     right: 0 !important;
