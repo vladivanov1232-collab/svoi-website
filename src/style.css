@@ -1176,6 +1176,7 @@ footer .footer-socials svg {
   .header {
     height: 65px;
     padding: 0 5vw;
+    border-bottom: 1px solid #ffffff24;
   }
 
   .logo { font-size: 29px; }
@@ -1190,20 +1191,21 @@ footer .footer-socials svg {
     align-items: flex-end;
   }
 
-  /* Продлеваем область видео вверх до верхнего края шапки */
+  /* Видео начинается сразу после нижней линии шапки */
 
   .hero-scene {
-    top: -65px;
+    position: absolute;
+    top: 65px;
     left: 0;
     right: 0;
     bottom: 0;
     width: 100%;
-    height: calc(100% + 65px);
+    height: calc(100% - 65px);
   }
 
   .hero-video {
     object-position: center center;
-    transform: translateY(-110px) scale(1.8);
+    transform: scale(1.45);
     transform-origin: center center;
   }
 
