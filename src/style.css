@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
 
 :root {
@@ -203,8 +202,6 @@ a { color: inherit; }
     linear-gradient(90deg, #08080845, transparent 80%);
   animation: depthReveal 2s ease-out both;
 }
-
-/* Убираем размытый световой слой */
 
 .hero-light {
   display: none !important;
@@ -1191,8 +1188,6 @@ footer .footer-socials svg {
     align-items: flex-end;
   }
 
-  /* Видео начинается от линии шапки */
-
   .hero-scene {
     position: absolute !important;
     inset: 0 !important;
@@ -1214,18 +1209,21 @@ footer .footer-socials svg {
     overflow: hidden;
   }
 
+  /* Видео начинается ниже шапки */
+
   .hero-video {
     position: absolute !important;
-    top: 0 !important;
+    top: 65px !important;
     left: 0 !important;
+    right: 0 !important;
     width: 100% !important;
-    height: 100% !important;
+    height: calc(100% - 65px) !important;
     min-width: 100%;
-    min-height: 100%;
+    min-height: 0 !important;
     object-fit: cover;
     object-position: center center;
     transform: scale(1.45);
-    transform-origin: center bottom;
+    transform-origin: center top;
   }
 
   .hero-shade {
@@ -1362,8 +1360,6 @@ footer .footer-socials svg {
   }
 
   .community-copy { font-size: 14px; }
-
-  /* Увеличенная надпись SVOI на телефонах */
 
   .giant-svoi {
     font-size: clamp(135px, 37vw, 170px);
