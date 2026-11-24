@@ -1190,13 +1190,16 @@ footer .footer-socials svg {
     align-items: flex-end;
   }
 
-  .hero-scene {
-    inset: 0;
-    width: 100%;
-    height: 100%;
-  }
+  /* Продлеваем область видео вверх до верхнего края шапки */
 
-  /* Поднимаем видео, чтобы скрыть верхнюю размытую полосу */
+  .hero-scene {
+    top: -65px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: calc(100% + 65px);
+  }
 
   .hero-video {
     object-position: center center;
