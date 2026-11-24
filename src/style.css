@@ -1191,7 +1191,7 @@ footer .footer-socials svg {
     align-items: flex-end;
   }
 
-  /* Видео занимает весь Hero — без смещения на 65px */
+  /* Видео занимает весь Hero без верхнего отступа */
 
   .hero-scene {
     position: absolute;
