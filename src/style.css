@@ -1191,16 +1191,13 @@ footer .footer-socials svg {
     align-items: flex-end;
   }
 
-  /* Видео начинается сразу после нижней линии шапки */
+  /* Видео занимает весь Hero — без смещения на 65px */
 
   .hero-scene {
     position: absolute;
-    top: 65px;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    inset: 0;
     width: 100%;
-    height: calc(100% - 65px);
+    height: 100%;
   }
 
   .hero-video {
