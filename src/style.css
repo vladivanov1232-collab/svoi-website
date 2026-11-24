@@ -1191,21 +1191,31 @@ footer .footer-socials svg {
     align-items: flex-end;
   }
 
-  /* Видео начинается под линией шапки.
-     Масштаб и исходное кадрирование сохраняются. */
+  /* Видео почти в исходном положении: смещение всего 2px */
 
   .hero-scene {
     position: absolute;
-    inset: 0;
+    top: 2px;
+    left: 0;
+    right: 0;
+    bottom: 0;
     width: 100%;
-    height: 100%;
+    height: auto;
+    z-index: 0;
     overflow: hidden;
-    clip-path: inset(65px 0 0 0);
   }
 
   .hero-video {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-width: 100%;
+    min-height: 100%;
+    object-fit: cover;
     object-position: center center;
-    transform: translateY(3px) scale(1.45);
+    transform: scale(1.45);
     transform-origin: center center;
   }
 
